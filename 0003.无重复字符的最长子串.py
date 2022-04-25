@@ -4,30 +4,19 @@
 link: https://leetcode-cn.com/problems/longest-substring-without-repeating-characters/
 """
 
-from collections import defaultdict
-
 
 class Solution:
     def lengthOfLongestSubstring(self, s: str) -> int:
-        lookup = defaultdict(int)
-        start = 0
-        end = 0
-        max_len = 0
-        counter = 0
-        while end < len(s):
-            if lookup[s[end]] > 0:
-                counter += 1
-            lookup[s[end]] += 1
-            end += 1
-            while counter > 0:
-                if lookup[s[start]] > 1:
-                    counter -= 1
-                lookup[s[start]] -= 1
-                start += 1
-            max_len = max(max_len, end - start)
-        return max_len
+        a = []
+        res = 0
+        for i in s:
+            if i in a:
+                a = a[a.index(i) + 1:]
+            a.append(i)
+            res = res if len(a) < res else len(a)
+        return res
 
 
 if __name__ == '__main__':
     s = Solution()
-    print(s.lengthOfLongestSubstring('jgfjaghjahghewuhghegjkbqt3iowjekgnvhg'))
+    print(s.lengthOfLongestSubstring('asdasdff'))
